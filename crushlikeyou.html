@@ -1,0 +1,2578 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Does Your Crush Like You?</title>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&amp;family=Barlow:wght@100;200;300;400;500;600;700;800;900&amp;display=swap" rel="stylesheet">
+  <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Barlow', sans-serif;
+            background: #ffe9f0;
+            color: #333;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Rubik', sans-serif;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1rem 2rem;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(253, 120, 154, 0.1);
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #fd789a, #e75480);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover .logo-icon {
+            transform: scale(1.1);
+        }
+
+        .logo-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: #e75480;
+        }
+
+        nav.scrolled .logo-text {
+            color: #333;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-links a, .nav-links button {
+            text-decoration: none;
+            color: #666;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .nav-links a:hover, .nav-links button:hover {
+            color: #fd789a;
+            background: rgba(253, 120, 154, 0.1);
+        }
+
+        .settings-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .settings-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 2rem;
+            overflow: hidden;
+        }
+
+        .floating-hearts {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-heart {
+            position: absolute;
+            bottom: -50px;
+            animation: float-up linear infinite;
+            opacity: 0.3;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.3;
+            }
+            90% {
+                opacity: 0.3;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-image {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 2rem;
+            animation: gentle-float 3s ease-in-out infinite;
+        }
+
+        @keyframes gentle-float {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 10px 30px rgba(253, 120, 154, 0.3));
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #fd789a, #e75480, #fe8caa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #fd789a, #e75480);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(253, 120, 154, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 40px rgba(253, 120, 154, 0.4);
+        }
+
+        .btn-primary svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+            animation: heartbeat 1.2s ease-in-out infinite;
+        }
+
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fd789a;
+        }
+
+        .stat-label {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* Quiz Section */
+        .quiz-section {
+            min-height: 100vh;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem 2rem;
+        }
+
+        .quiz-section.active {
+            display: flex;
+        }
+
+        .quiz-container {
+            width: 100%;
+            max-width: 700px;
+        }
+
+        .quiz-header {
+            margin-bottom: 2rem;
+        }
+
+        .quiz-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: #888;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .back-btn:hover {
+            color: #fd789a;
+        }
+
+        .back-btn svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .question-counter {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #fd789a;
+            font-weight: 600;
+        }
+
+        .question-counter svg {
+            width: 20px;
+            height: 20px;
+            fill: #fd789a;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: #ffc2d6;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #fd789a, #e75480);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        .question-card {
+            background: white;
+            border-radius: 30px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(253, 120, 154, 0.15);
+            position: relative;
+        }
+
+        .question-badge {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #fd789a, #e75480);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 5px 20px rgba(253, 120, 154, 0.3);
+        }
+
+        .question-badge svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .question-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            text-align: center;
+            margin: 1rem 0 2rem;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.2rem 1.5rem;
+            background: #fff5f8;
+            border: 2px solid transparent;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            width: 100%;
+        }
+
+        .option:hover {
+            border-color: #fd789a;
+            background: #ffe9f0;
+            transform: translateX(5px);
+        }
+
+        .option-letter {
+            width: 35px;
+            height: 35px;
+            background: #ffc2d6;
+            color: #fd789a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+            transition: all 0.3s ease;
+        }
+
+        .option:hover .option-letter {
+            background: #fd789a;
+            color: white;
+        }
+
+        .option-text {
+            flex: 1;
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .option-heart {
+            width: 20px;
+            height: 20px;
+            fill: #fd789a;
+            opacity: 0;
+            transform: scale(0);
+            transition: all 0.3s ease;
+        }
+
+        .option.selected .option-heart {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .option.selected {
+            border-color: #fd789a;
+            background: #ffe9f0;
+        }
+
+        .option.selected .option-letter {
+            background: #fd789a;
+            color: white;
+        }
+
+        .question-dots {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: #ffc2d6;
+            border-radius: 50%;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            width: 24px;
+            background: #fd789a;
+            border-radius: 4px;
+        }
+
+        .dot.completed {
+            background: #fd789a;
+        }
+
+        /* Results Section */
+        .results-section {
+            min-height: 100vh;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 6rem 2rem 2rem;
+            position: relative;
+        }
+
+        .results-section.active {
+            display: flex;
+        }
+
+        .confetti-container {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .confetti {
+            position: absolute;
+            animation: confetti-fall 3s linear forwards;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100px) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .results-card {
+            background: white;
+            border-radius: 30px;
+            padding: 3rem;
+            box-shadow: 0 20px 60px rgba(253, 120, 154, 0.2);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        .score-circle {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .score-ring {
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #fd789a, #e75480);
+            opacity: 0.2;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.2; }
+            50% { transform: scale(1.05); opacity: 0.3; }
+        }
+
+        .score-inner {
+            position: absolute;
+            inset: 15px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 5px 20px rgba(0,0,0,0.05);
+        }
+
+        .score-number {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fd789a, #e75480);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .score-label {
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        .score-heart {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            fill: #fd789a;
+        }
+
+        .score-heart.top-right {
+            top: 0;
+            right: 0;
+            animation: bounce 1s ease-in-out infinite;
+        }
+
+        .score-heart.bottom-left {
+            bottom: 0;
+            left: 0;
+            animation: bounce 1s ease-in-out infinite 0.5s;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        .result-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .advice-box {
+            background: linear-gradient(135deg, #ffe9f0, #ffc2d6);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+
+        .advice-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: #e75480;
+            font-weight: 600;
+        }
+
+        .advice-header svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .advice-text {
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .result-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: white;
+            color: #fd789a;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            border: 2px solid #fd789a;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #fd789a;
+            color: white;
+        }
+
+        .btn-secondary svg, .btn-primary svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 5rem 2rem;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            color: #666;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 25px;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(253, 120, 154, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(253, 120, 154, 0.2);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, #fd789a, #e75480);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+        }
+
+        .feature-icon svg {
+            width: 30px;
+            height: 30px;
+            fill: white;
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .feature-card p {
+            color: #666;
+        }
+
+        /* Community Section */
+        .community-section {
+            padding: 5rem 2rem;
+        }
+
+        .community-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .community-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, #fd789a, #e75480);
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .community-badge svg {
+            width: 18px;
+            height: 18px;
+            fill: white;
+        }
+
+        .add-crush-btn {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        /* Crush Form */
+        .crush-form-container {
+            display: none;
+            max-width: 500px;
+            margin: 0 auto 3rem;
+            animation: slide-up 0.5s ease;
+        }
+
+        .crush-form-container.active {
+            display: block;
+        }
+
+        @keyframes slide-up {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .crush-form {
+            background: white;
+            border-radius: 25px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(253, 120, 154, 0.15);
+        }
+
+        .form-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .form-header h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #333;
+        }
+
+        .form-header svg {
+            width: 24px;
+            height: 24px;
+            fill: #fd789a;
+        }
+
+        .close-form {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+
+        .close-form:hover {
+            background: #ffe9f0;
+        }
+
+        .close-form svg {
+            width: 20px;
+            height: 20px;
+            color: #888;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #555;
+            font-weight: 500;
+        }
+
+        .photo-upload {
+            width: 120px;
+            height: 120px;
+            border: 2px dashed #ffc2d6;
+            border-radius: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin: 0 auto;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .photo-upload:hover {
+            border-color: #fd789a;
+        }
+
+        .photo-upload.has-image {
+            border: none;
+        }
+
+        .photo-upload img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .photo-upload .upload-icon {
+            color: #fd789a;
+            text-align: center;
+        }
+
+        .photo-upload .upload-icon svg {
+            width: 30px;
+            height: 30px;
+            margin-bottom: 0.3rem;
+        }
+
+        .photo-upload .upload-icon span {
+            font-size: 0.8rem;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #ffc2d6;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #fd789a;
+        }
+
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        /* Crush Cards Grid */
+        .crushes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .crush-card {
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(253, 120, 154, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .crush-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(253, 120, 154, 0.2);
+        }
+
+        .crush-card.creator-card {
+            position: relative;
+            border: 3px solid transparent;
+            background: linear-gradient(white, white) padding-box,
+                        linear-gradient(45deg, #ffd700, #fd789a, #ffd700) border-box;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.6); }
+        }
+
+        .crush-photo {
+            height: 180px;
+            background: linear-gradient(135deg, #ffe9f0, #ffc2d6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .crush-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .crush-photo .avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .crush-photo .avatar svg {
+            width: 40px;
+            height: 40px;
+            fill: #fd789a;
+        }
+
+        .creator-badge {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: linear-gradient(135deg, #ffd700, #ffed4e);
+            color: #333;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .creator-badge svg {
+            width: 14px;
+            height: 14px;
+        }
+
+        .crush-content {
+            padding: 1.5rem;
+        }
+
+        .crush-name {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .creator-card .crush-name {
+            background: linear-gradient(90deg, #ffd700, #e75480);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .crush-name svg {
+            width: 18px;
+            height: 18px;
+            fill: #ffd700;
+        }
+
+        .crush-story {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            display: -webkit-box;
+            -webkit-line-clamp: 4;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 1rem;
+        }
+
+        .crush-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .crush-date {
+            font-size: 0.8rem;
+            color: #aaa;
+        }
+
+        .like-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #888;
+        }
+
+        .like-btn:hover {
+            background: #ffe9f0;
+            color: #fd789a;
+        }
+
+        .like-btn.liked {
+            background: #ffe9f0;
+            color: #fd789a;
+        }
+
+        .like-btn svg {
+            width: 18px;
+            height: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .like-btn.liked svg {
+            fill: #fd789a;
+            transform: scale(1.1);
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 5rem 2rem;
+            background: linear-gradient(135deg, #fd789a, #e75480);
+            text-align: center;
+        }
+
+        .about-section svg {
+            width: 60px;
+            height: 60px;
+            fill: white;
+            margin-bottom: 1.5rem;
+            animation: heartbeat 1.2s ease-in-out infinite;
+        }
+
+        .about-section h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .about-section p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+
+        .about-section .btn-primary {
+            background: white;
+            color: #fd789a;
+        }
+
+        .about-section .btn-primary:hover {
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Footer */
+        footer {
+            padding: 2rem;
+            background: white;
+            text-align: center;
+            border-top: 1px solid #ffc2d6;
+        }
+
+        footer .logo-icon {
+            margin: 0 auto 1rem;
+        }
+
+        footer p {
+            color: #888;
+            margin-bottom: 0.5rem;
+        }
+
+        footer .dedication {
+            color: #fd789a;
+            font-size: 0.9rem;
+        }
+
+        /* Settings Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
+            z-index: 200;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 25px;
+            width: 90%;
+            max-width: 400px;
+            max-height: 90vh;
+            overflow-y: auto;
+            animation: slide-up 0.3s ease;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid #ffe9f0;
+        }
+
+        .modal-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .modal-title .icon {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #fd789a, #e75480);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-title .icon svg {
+            width: 18px;
+            height: 18px;
+            fill: white;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            transition: background 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: #ffe9f0;
+        }
+
+        .close-modal svg {
+            width: 20px;
+            height: 20px;
+            color: #888;
+        }
+
+        .modal-content {
+            padding: 1.5rem;
+        }
+
+        .settings-section {
+            margin-bottom: 2rem;
+        }
+
+        .settings-section h4 {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            color: #aaa;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: #fff5f8;
+            border-radius: 15px;
+            margin-bottom: 0.8rem;
+        }
+
+        .setting-info {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .setting-icon {
+            width: 40px;
+            height: 40px;
+            background: #fd789a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .setting-icon svg {
+            width: 20px;
+            height: 20px;
+            fill: white;
+        }
+
+        .setting-icon.muted {
+            background: #ddd;
+        }
+
+        .setting-text {
+            font-weight: 500;
+        }
+
+        .setting-text small {
+            display: block;
+            color: #888;
+            font-size: 0.8rem;
+            font-weight: 400;
+        }
+
+        .toggle {
+            width: 50px;
+            height: 26px;
+            background: #ddd;
+            border-radius: 13px;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .toggle.active {
+            background: #fd789a;
+        }
+
+        .toggle::after {
+            content: '';
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .toggle.active::after {
+            transform: translateX(24px);
+        }
+
+        .about-box {
+            background: linear-gradient(135deg, #ffe9f0, #ffc2d6);
+            border-radius: 15px;
+            padding: 1.5rem;
+        }
+
+        .about-box h5 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .about-box h5 svg {
+            width: 24px;
+            height: 24px;
+            fill: #fd789a;
+        }
+
+        .about-box p {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .donate-box {
+            background: linear-gradient(135deg, #fd789a, #e75480);
+            border-radius: 15px;
+            padding: 1.5rem;
+            color: white;
+            text-align: center;
+        }
+
+        .donate-box h5 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .donate-box h5 .heart-icon {
+            width: 30px;
+            height: 30px;
+            background: rgba(255,255,255,0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: heartbeat 1.2s ease-in-out infinite;
+        }
+
+        .donate-box h5 svg {
+            width: 16px;
+            height: 16px;
+            fill: white;
+        }
+
+        .donate-box p {
+            color: rgba(255,255,255,0.9);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .donate-box .btn-primary {
+            background: white;
+            color: #fd789a;
+            padding: 0.8rem 2rem;
+        }
+
+        .donate-box .btn-primary:hover {
+            background: rgba(255,255,255,0.9);
+        }
+
+        /* Donate Modal */
+        .donate-modal .modal {
+            max-width: 350px;
+        }
+
+        .donate-header {
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        .donate-header .heart-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #fd789a, #e75480);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            animation: heartbeat 1.2s ease-in-out infinite;
+        }
+
+        .donate-header .heart-icon svg {
+            width: 30px;
+            height: 30px;
+            fill: white;
+        }
+
+        .donate-amounts {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+            padding: 0 1.5rem 1rem;
+        }
+
+        .amount-btn {
+            padding: 1rem;
+            border: 2px solid #ffc2d6;
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .amount-btn:hover, .amount-btn.selected {
+            border-color: #fd789a;
+            background: #ffe9f0;
+            color: #fd789a;
+        }
+
+        .custom-amount {
+            padding: 0 1.5rem 1rem;
+        }
+
+        .custom-amount input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #ffc2d6;
+            border-radius: 12px;
+            text-align: center;
+            font-size: 1.1rem;
+            font-family: inherit;
+        }
+
+        .custom-amount input:focus {
+            outline: none;
+            border-color: #fd789a;
+        }
+
+        .donate-actions {
+            display: flex;
+            gap: 0.5rem;
+            padding: 0 1.5rem 1.5rem;
+        }
+
+        .donate-actions button {
+            flex: 1;
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .donate-actions .cancel-btn {
+            background: white;
+            border: 2px solid #ddd;
+            color: #666;
+        }
+
+        .donate-actions .cancel-btn:hover {
+            border-color: #fd789a;
+            color: #fd789a;
+        }
+
+        .donate-actions .confirm-btn {
+            background: linear-gradient(135deg, #fd789a, #e75480);
+            border: none;
+            color: white;
+        }
+
+        .donate-actions .confirm-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(253, 120, 154, 0.3);
+        }
+
+        .donate-actions .confirm-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .thank-you {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .thank-you .check-icon {
+            width: 70px;
+            height: 70px;
+            background: #d4edda;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+        }
+
+        .thank-you .check-icon svg {
+            width: 35px;
+            height: 35px;
+            fill: #28a745;
+        }
+
+        .thank-you-hearts {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .thank-you-hearts svg {
+            width: 24px;
+            height: 24px;
+            fill: #fd789a;
+            animation: pulse 0.5s ease-in-out infinite alternate;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-image {
+                width: 150px;
+                height: 150px;
+            }
+
+            .hero-stats {
+                gap: 2rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .question-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .question-text {
+                font-size: 1.2rem;
+            }
+
+            .results-card {
+                padding: 2rem 1.5rem;
+            }
+
+            .score-circle {
+                width: 160px;
+                height: 160px;
+            }
+
+            .score-number {
+                font-size: 3rem;
+            }
+
+            .result-title {
+                font-size: 1.5rem;
+            }
+
+            .crushes-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links a {
+                display: none;
+            }
+        }
+
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+    </style>
+ </head>
+ <body>
+  <!-- Navigation -->
+  <nav id="navbar">
+   <div class="nav-content">
+    <a href="#" class="logo" onclick="goHome()"> 
+     <div class="logo-icon">
+      <svg viewBox="0 0 24 24">
+       <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+      </svg>
+     </div> 
+     <span class="logo-text">CrushQuiz</span> 
+    </a>
+    <div class="nav-links">
+     <a href="#community" onclick="scrollToCommunity()">Community</a>
+     <button class="settings-btn" onclick="openSettings()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+       <circle cx="12" cy="12" r="3" /><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z" />
+      </svg>
+     </button>
+    </div>
+   </div>
+  </nav>
+  <!-- Hero Section -->
+  <section class="hero" id="hero">
+   <div class="floating-hearts" id="floatingHearts"></div>
+   <div class="hero-content">
+    <div class="hero-image">
+     <svg viewBox="0 0 200 200">
+      <path d="M100 170 C20 110 20 50 60 30 C85 17 100 40 100 40 C100 40 115 17 140 30 C180 50 180 110 100 170Z" fill="#fd789a" /> <path d="M40 100 L160 100" stroke="white" stroke-width="8" stroke-linecap="round" /> <polygon points="30,100 50,90 50,110" fill="white" /> <polygon points="170,100 150,90 150,110" fill="white" />
+     </svg>
+    </div>
+    <h1><span class="gradient-text">Does Your Crush</span>
+     <br>
+     <span class="gradient-text">Like You?</span></h1>
+    <p>Take this fun 10-question quiz to find out if your crush feels the same way!</p>
+    <button class="btn-primary" onclick="startQuiz()">
+     <svg viewBox="0 0 24 24">
+      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+     </svg>
+     Start Quiz
+     <svg viewBox="0 0 24 24">
+      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+     </svg>
+    </button>
+    <div class="hero-stats">
+     <div class="stat">
+      <div class="stat-number">10</div>
+      <div class="stat-label">Questions</div>
+     </div>
+     <div class="stat">
+      <div class="stat-number">100%</div>
+      <div class="stat-label">Free</div>
+     </div>
+     <div class="stat">
+      <div class="stat-number">
+       <svg viewBox="0 0 24 24" style="width:40px;height:40px;fill:#fd789a">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+       </svg>
+      </div>
+      <div class="stat-label">Fun</div>
+     </div>
+    </div>
+   </div>
+  </section>
+  <!-- Quiz Section -->
+  <section class="quiz-section" id="quizSection">
+   <div class="quiz-container">
+    <div class="quiz-header">
+     <div class="quiz-nav">
+      <button class="back-btn" onclick="goBack()">
+       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M19 12H5M12 19l-7-7 7-7" />
+       </svg>
+       <span id="backText">Home</span>
+      </button>
+      <div class="question-counter">
+       <svg viewBox="0 0 24 24">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+       </svg>
+       <span id="questionCounter">Question 1 of 10</span>
+      </div>
+     </div>
+     <div class="progress-bar">
+      <div class="progress-fill" id="progressFill" style="width: 10%"></div>
+     </div>
+    </div>
+    <div class="question-card">
+     <div class="question-badge">
+      <svg viewBox="0 0 24 24">
+       <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+      </svg>
+      <span id="questionNumber">Q1</span>
+     </div>
+     <h2 class="question-text" id="questionText">Loading...</h2>
+     <div class="options" id="optionsContainer"></div>
+    </div>
+    <div class="question-dots" id="questionDots"></div>
+   </div>
+  </section>
+  <!-- Results Section -->
+  <section class="results-section" id="resultsSection">
+   <div class="confetti-container" id="confettiContainer"></div>
+   <div class="results-card">
+    <div class="score-circle">
+     <div class="score-ring"></div>
+     <div class="score-inner">
+      <div class="score-number" id="scoreNumber">0%</div>
+      <div class="score-label">Match Score</div>
+     </div>
+     <svg class="score-heart top-right" viewBox="0 0 24 24">
+      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+     </svg>
+     <svg class="score-heart bottom-left" viewBox="0 0 24 24">
+      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+     </svg>
+    </div>
+    <h2 class="result-title gradient-text" id="resultTitle">Result Title</h2>
+    <div class="advice-box">
+     <div class="advice-header">
+      <svg viewBox="0 0 24 24">
+       <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+      </svg>
+      Our Advice
+     </div>
+     <p class="advice-text" id="adviceText">Advice text...</p>
+    </div>
+    <div class="result-buttons">
+     <button class="btn-secondary" onclick="restartQuiz()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+       <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 12M3 3v9h9" />
+      </svg>
+      Take Again
+     </button>
+     <button class="btn-primary" onclick="shareResult()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+       <circle cx="18" cy="5" r="3" /><circle cx="6" cy="12" r="3" /><circle cx="18" cy="19" r="3" /><line x1="8.59" y1="13.51" x2="15.42" y2="17.49" /><line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+      </svg>
+      Share Result
+     </button>
+    </div>
+    <div style="margin-top: 1.5rem;">
+     <button class="btn-secondary" onclick="scrollToCommunity()" style="border: none; background: #fff5f8;">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+       <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+      </svg>
+      See What Others Are Saying
+     </button>
+    </div>
+   </div>
+  </section>
+  <!-- Features Section -->
+  <section class="features-section">
+   <div class="section-header">
+    <h2>How It <span class="gradient-text">Works</span></h2>
+    <p>Take our scientifically-designed quiz to get insights into your crush's feelings</p>
+   </div>
+   <div class="features-grid">
+    <div class="feature-card">
+     <div class="feature-icon">
+      <svg viewBox="0 0 24 24">
+       <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+      </svg>
+     </div>
+     <h3>Answer 10 Questions</h3>
+     <p>Honest questions about your interactions with your crush</p>
+    </div>
+    <div class="feature-card">
+     <div class="feature-icon">
+      <svg viewBox="0 0 24 24">
+       <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+      </svg>
+     </div>
+     <h3>Get Your Score</h3>
+     <p>Receive a percentage match based on your answers</p>
+    </div>
+    <div class="feature-card">
+     <div class="feature-icon">
+      <svg viewBox="0 0 24 24">
+       <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" />
+      </svg>
+     </div>
+     <h3>Get Advice</h3>
+     <p>Personalized advice on what to do next</p>
+    </div>
+   </div>
+  </section>
+  <!-- Community Section -->
+  <section class="community-section" id="community">
+   <div class="community-header">
+    <div class="community-badge">
+     <svg viewBox="0 0 24 24">
+      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+     </svg>
+     Community Crushes
+    </div>
+    <h2>Anonymous <span class="gradient-text">Love</span> Stories</h2>
+    <p style="color: #666; max-width: 500px; margin: 0.5rem auto 0;">Share your crush anonymously and read stories from others. No one will know it's you!</p>
+   </div>
+   <div class="add-crush-btn">
+    <button class="btn-primary" onclick="showCrushForm()">
+     <svg viewBox="0 0 24 24">
+      <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+     </svg>
+     Share Your Crush
+    </button>
+   </div>
+   <!-- Crush Form -->
+   <div class="crush-form-container" id="crushForm">
+    <div class="crush-form">
+     <div class="form-header">
+      <h3>
+       <svg viewBox="0 0 24 24">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+       </svg>
+       Tell Us About Your Crush
+      </h3>
+      <button class="close-form" onclick="hideCrushForm()">
+       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+       </svg>
+      </button>
+     </div>
+     <form onsubmit="submitCrush(event)">
+      <div class="form-group">
+       <label>Photo of Your Crush (Optional)</label>
+       <div class="photo-upload" id="photoUpload" onclick="document.getElementById('photoInput').click()">
+        <div class="upload-icon">
+         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="17,8 12,3 7,8" /><line x1="12" y1="3" x2="12" y2="15" />
+         </svg>
+         <span>Add Photo</span>
+        </div>
+       </div>
+       <input type="file" id="photoInput" accept="image/*" style="display: none;" onchange="handlePhotoUpload(event)">
+      </div>
+      <div class="form-group">
+       <label>Your Crush's Name *</label> <input type="text" id="crushName" placeholder="e.g., Alex, Sarah, Jordan..." required>
+      </div>
+      <div class="form-group">
+       <label>Why Do You Like Them? *</label> <textarea id="crushStory" placeholder="Tell us what makes them special..." required></textarea>
+      </div>
+      <button type="submit" class="btn-primary" style="width: 100%;">
+       <svg viewBox="0 0 24 24">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+       </svg>
+       Share Anonymously
+      </button>
+     </form>
+    </div>
+   </div>
+   <!-- Crushes Grid -->
+   <div class="crushes-grid" id="crushesGrid"></div>
+  </section>
+  <!-- About Section -->
+  <section class="about-section">
+   <svg viewBox="0 0 24 24">
+    <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+   </svg>
+   <h2>Remember, Love is Beautiful!</h2>
+   <p>This quiz is just for fun! The best way to know if someone likes you is to be brave and ask them. Life's too short for "what ifs"! Whether they say yes or no, you're amazing just the way you are.</p>
+   <button class="btn-primary" onclick="startQuiz()">Take the Quiz Again</button>
+  </section>
+  <!-- Footer -->
+  <footer>
+   <div class="logo-icon" style="margin-bottom: 1rem;">
+    <svg viewBox="0 0 24 24">
+     <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+    </svg>
+   </div>
+   <p>Made with love for dreamers and romantics everywhere</p>
+   <p class="dedication">Special dedication to Jasmine - the creator's crush</p>
+  </footer>
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="settingsModal">
+   <div class="modal">
+    <div class="modal-header">
+     <div class="modal-title">
+      <div class="icon">
+       <svg viewBox="0 0 24 24">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+       </svg>
+      </div>
+      Settings
+     </div>
+     <button class="close-modal" onclick="closeSettings()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+       <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+      </svg>
+     </button>
+    </div>
+    <div class="modal-content">
+     <div class="settings-section">
+      <h4>Preferences</h4>
+      <div class="setting-item">
+       <div class="setting-info">
+        <div class="setting-icon" id="soundIcon">
+         <svg viewBox="0 0 24 24">
+          <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5" /><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07" />
+         </svg>
+        </div>
+        <div class="setting-text">
+         Sound Effects <small>Play sounds during quiz</small>
+        </div>
+       </div>
+       <div class="toggle active" id="soundToggle" onclick="toggleSetting('sound')"></div>
+      </div>
+      <div class="setting-item">
+       <div class="setting-info">
+        <div class="setting-icon muted" id="notifIcon">
+         <svg viewBox="0 0 24 24">
+          <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" /><path d="M13.73 21a2 2 0 0 1-3.46 0" />
+         </svg>
+        </div>
+        <div class="setting-text">
+         Notifications <small>Get updates about new features</small>
+        </div>
+       </div>
+       <div class="toggle" id="notifToggle" onclick="toggleSetting('notif')"></div>
+      </div>
+     </div>
+     <div class="settings-section">
+      <h4>About</h4>
+      <div class="about-box">
+       <h5>
+        <svg viewBox="0 0 24 24">
+         <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+        </svg>
+        Does Your Crush Like You?
+       </h5>
+       <p>Made with love for anyone who's ever wondered if their crush feels the same way. Remember: the best way to know is to ask!</p>
+      </div>
+     </div>
+     <div class="settings-section">
+      <h4>Support Us</h4>
+      <div class="donate-box">
+       <h5>
+        <div class="heart-icon">
+         <svg viewBox="0 0 24 24">
+          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+         </svg>
+        </div>
+        Love This Game?
+       </h5>
+       <p>Buy us a coffee! Your support helps us keep this quiz free.</p>
+       <button class="btn-primary" onclick="openDonate()">
+        <svg viewBox="0 0 24 24">
+         <path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z" /><line x1="6" y1="1" x2="6" y2="4" /><line x1="10" y1="1" x2="10" y2="4" /><line x1="14" y1="1" x2="14" y2="4" />
+        </svg>
+        Donate Now
+       </button>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <!-- Donate Modal -->
+  <div class="modal-overlay donate-modal" id="donateModal">
+   <div class="modal">
+    <div class="donate-header" id="donateHeader">
+     <div class="heart-icon">
+      <svg viewBox="0 0 24 24">
+       <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+      </svg>
+     </div>
+     <h3>Support Our Work</h3>
+     <p style="color: #666;">Choose an amount to donate</p>
+    </div>
+    <div id="donateContent">
+     <div class="donate-amounts">
+      <button class="amount-btn" onclick="selectAmount(3)">$3</button>
+      <button class="amount-btn" onclick="selectAmount(5)">$5</button>
+      <button class="amount-btn" onclick="selectAmount(10)">$10</button>
+      <button class="amount-btn" onclick="selectAmount(20)">$20</button>
+     </div>
+     <div class="custom-amount">
+      <input type="number" id="customAmount" placeholder="Custom amount" oninput="selectCustomAmount(this.value)">
+     </div>
+     <div class="donate-actions">
+      <button class="cancel-btn" onclick="closeDonate()">Cancel</button>
+      <button class="confirm-btn" id="donateBtn" onclick="confirmDonate()" disabled>Donate</button>
+     </div>
+    </div>
+    <div id="thankYouContent" style="display: none;">
+     <div class="thank-you">
+      <div class="check-icon">
+       <svg viewBox="0 0 24 24">
+        <polyline points="20 6 9 17 4 12" />
+       </svg>
+      </div>
+      <h3>Thank You!</h3>
+      <p style="color: #666;">Your donation means the world to us!</p>
+      <div class="thank-you-hearts">
+       <svg viewBox="0 0 24 24">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+       </svg>
+       <svg viewBox="0 0 24 24">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+       </svg>
+       <svg viewBox="0 0 24 24">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+       </svg>
+       <svg viewBox="0 0 24 24">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+       </svg>
+       <svg viewBox="0 0 24 24">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+       </svg>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <script>
+        // Quiz Data
+        const quizQuestions = [
+            {
+                question: "Does your crush make eye contact with you often?",
+                options: [
+                    { text: "Yes, they stare into my eyes & hold gaze", score: 10 },
+                    { text: "Sometimes, but they look away quickly", score: 7 },
+                    { text: "Rarely, only when we're talking", score: 4 },
+                    { text: "No, they avoid eye contact with me", score: 1 }
+                ]
+            },
+            {
+                question: "How does your crush act when you're around?",
+                options: [
+                    { text: "They get nervous & fidgety, but in a cute way", score: 10 },
+                    { text: "They smile more & seem happier", score: 8 },
+                    { text: "They act pretty normal, nothing special", score: 5 },
+                    { text: "They seem uncomfortable or leave", score: 2 }
+                ]
+            },
+            {
+                question: "Does your crush find reasons to touch you?",
+                options: [
+                    { text: "Yes, playful touches on arm/shoulder often", score: 10 },
+                    { text: "Sometimes, accidental 'bumps' or high-fives", score: 7 },
+                    { text: "Rarely, only when necessary", score: 4 },
+                    { text: "No, they keep physical distance", score: 1 }
+                ]
+            },
+            {
+                question: "How quickly does your crush respond to your messages?",
+                options: [
+                    { text: "Almost instantly, always replies fast", score: 10 },
+                    { text: "Within a reasonable time, never leaves me hanging", score: 8 },
+                    { text: "Sometimes fast, sometimes takes hours", score: 5 },
+                    { text: "Takes forever or often doesn't reply", score: 2 }
+                ]
+            },
+            {
+                question: "Does your crush remember small details about you?",
+                options: [
+                    { text: "Yes, they remember everything I tell them!", score: 10 },
+                    { text: "They remember important things I mentioned", score: 8 },
+                    { text: "They remember some things, forget others", score: 5 },
+                    { text: "No, they never remember what I say", score: 1 }
+                ]
+            },
+            {
+                question: "Has your crush ever given you a compliment?",
+                options: [
+                    { text: "Yes, often and very specific compliments", score: 10 },
+                    { text: "Sometimes, nice comments here and there", score: 7 },
+                    { text: "Rarely, maybe once or twice", score: 4 },
+                    { text: "Never, not that I can recall", score: 1 }
+                ]
+            },
+            {
+                question: "Does your crush try to spend time near you?",
+                options: [
+                    { text: "Yes, they always sit/stand close to me!", score: 10 },
+                    { text: "Sometimes they find reasons to be nearby", score: 7 },
+                    { text: "Only when we're in the same group", score: 4 },
+                    { text: "No, they don't make an effort", score: 1 }
+                ]
+            },
+            {
+                question: "How does your crush react when you talk to other people?",
+                options: [
+                    { text: "They seem a bit jealous or try to join in", score: 10 },
+                    { text: "They pay attention to who I'm talking to", score: 7 },
+                    { text: "They don't seem to notice or care", score: 4 },
+                    { text: "They look relieved or happier", score: 1 }
+                ]
+            },
+            {
+                question: "Has your crush ever teased you playfully?",
+                options: [
+                    { text: "Yes, all the time in a flirty way!", score: 10 },
+                    { text: "Sometimes, light teasing and jokes", score: 7 },
+                    { text: "Rarely, only when others are around", score: 4 },
+                    { text: "No, they're always serious with me", score: 2 }
+                ]
+            },
+            {
+                question: "Do you catch your crush looking at you when you're not looking?",
+                options: [
+                    { text: "Yes, all the time and they smile when caught!", score: 10 },
+                    { text: "Sometimes, and they blush or look away", score: 8 },
+                    { text: "Maybe once or twice, not sure", score: 5 },
+                    { text: "No, never noticed that", score: 1 }
+                ]
+            }
+        ];
+
+        // State
+        let currentQuestion = 0;
+        let answers = [];
+        let selectedAmount = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createFloatingHearts();
+            createQuestionDots();
+            loadCrushes();
+            
+            // Navbar scroll effect
+            window.addEventListener('scroll', () => {
+                const navbar = document.getElementById('navbar');
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+        });
+
+        // Floating Hearts
+        function createFloatingHearts() {
+            const container = document.getElementById('floatingHearts');
+            for (let i = 0; i < 15; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'floating-heart';
+                heart.innerHTML = '<svg viewBox="0 0 24 24" style="fill:#fd789a"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
+                heart.style.left = Math.random() * 100 + '%';
+                heart.style.width = (Math.random() * 20 + 10) + 'px';
+                heart.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                heart.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(heart);
+            }
+        }
+
+        // Quiz Functions
+        function startQuiz() {
+            currentQuestion = 0;
+            answers = [];
+            document.getElementById('hero').style.display = 'none';
+            document.querySelector('.features-section').style.display = 'none';
+            document.getElementById('community').style.display = 'none';
+            document.querySelector('.about-section').style.display = 'none';
+            document.querySelector('footer').style.display = 'none';
+            document.getElementById('quizSection').classList.add('active');
+            showQuestion();
+        }
+
+        function showQuestion() {
+            const question = quizQuestions[currentQuestion];
+            document.getElementById('questionNumber').textContent = 'Q' + (currentQuestion + 1);
+            document.getElementById('questionText').textContent = question.question;
+            document.getElementById('questionCounter').textContent = `Question ${currentQuestion + 1} of ${quizQuestions.length}`;
+            document.getElementById('progressFill').style.width = ((currentQuestion + 1) / quizQuestions.length * 100) + '%';
+            document.getElementById('backText').textContent = currentQuestion === 0 ? 'Home' : 'Back';
+
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+
+            question.options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option';
+                btn.innerHTML = `
+                    <div class="option-letter">${String.fromCharCode(65 + index)}</div>
+                    <div class="option-text">${option.text}</div>
+                    <svg class="option-heart" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                `;
+                btn.onclick = () => selectOption(index, option.score);
+                optionsContainer.appendChild(btn);
+            });
+
+            updateDots();
+        }
+
+        function selectOption(index, score) {
+            const options = document.querySelectorAll('.option');
+            options.forEach((opt, i) => {
+                if (i === index) {
+                    opt.classList.add('selected');
+                }
+            });
+
+            answers.push(score);
+
+            setTimeout(() => {
+                if (currentQuestion < quizQuestions.length - 1) {
+                    currentQuestion++;
+                    showQuestion();
+                } else {
+                    showResults();
+                }
+            }, 500);
+        }
+
+        function goBack() {
+            if (currentQuestion === 0) {
+                goHome();
+            } else {
+                currentQuestion--;
+                answers.pop();
+                showQuestion();
+            }
+        }
+
+        function createQuestionDots() {
+            const container = document.getElementById('questionDots');
+            for (let i = 0; i < 10; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                dot.id = 'dot' + i;
+                container.appendChild(dot);
+            }
+        }
+
+        function updateDots() {
+            for (let i = 0; i < 10; i++) {
+                const dot = document.getElementById('dot' + i);
+                dot.classList.remove('active', 'completed');
+                if (i === currentQuestion) {
+                    dot.classList.add('active');
+                } else if (i < currentQuestion) {
+                    dot.classList.add('completed');
+                }
+            }
+        }
+
+        // Results
+        function showResults() {
+            document.getElementById('quizSection').classList.remove('active');
+            document.getElementById('resultsSection').classList.add('active');
+
+            const totalScore = answers.reduce((a, b) => a + b, 0);
+            const percentage = Math.round((totalScore / 100) * 100);
+
+            // Animate score
+            let currentScore = 0;
+            const interval = setInterval(() => {
+                currentScore += 2;
+                if (currentScore >= percentage) {
+                    currentScore = percentage;
+                    clearInterval(interval);
+                    if (percentage >= 50) {
+                        createConfetti();
+                    }
+                }
+                document.getElementById('scoreNumber').textContent = currentScore + '%';
+            }, 30);
+
+            // Get result text
+            let title, advice;
+            if (percentage >= 90) {
+                title = "They Definitely Like You!";
+                advice = "All signs point to YES! Your crush is showing all the classic signs of attraction. They're nervous around you, find reasons to touch you, and always want to be near. It's time to make your move! Ask them out or confess your feelings - the odds are in your favor. Good luck!";
+            } else if (percentage >= 70) {
+                title = "They Probably Like You!";
+                advice = "Things are looking very promising! Your crush shows several signs of interest. They enjoy your company and seem to care about you. Try spending more one-on-one time together and see how they respond. Drop some hints and gauge their reaction. You might be surprised!";
+            } else if (percentage >= 50) {
+                title = "Maybe... It's Unclear";
+                advice = "Your crush might like you, but they're sending mixed signals. They show some interest but also keep their distance sometimes. Try to initiate more conversations and see if they open up. They could be shy or unsure of their own feelings. Give it time and keep being your amazing self!";
+            } else if (percentage >= 30) {
+                title = "Signs Are Weak";
+                advice = "The signs aren't very strong right now. Your crush might see you as just a friend or acquaintance. Don't lose hope though! People can develop feelings over time. Focus on building a stronger friendship first, and who knows what might happen? Sometimes the best relationships start as friendships!";
+            } else {
+                title = "Probably Not...";
+                advice = "The signs suggest your crush might not feel the same way right now. But don't be too discouraged! Attraction can develop over time, and you deserve someone who truly appreciates you. Focus on yourself, your hobbies, and your friends. The right person will come along when you least expect it!";
+            }
+
+            document.getElementById('resultTitle').textContent = title;
+            document.getElementById('adviceText').textContent = advice;
+        }
+
+        function createConfetti() {
+            const container = document.getElementById('confettiContainer');
+            const colors = ['#fd789a', '#fe8caa', '#ffc2d6', '#ffd700', '#e75480'];
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.animationDelay = Math.random() * 2 + 's';
+                
+                if (Math.random() > 0.5) {
+                    confetti.innerHTML = '<svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:' + colors[Math.floor(Math.random() * colors.length)] + '"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>';
+                } else {
+                    confetti.style.width = '10px';
+                    confetti.style.height = '10px';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.borderRadius = '50%';
+                }
+                
+                container.appendChild(confetti);
+            }
+
+            setTimeout(() => {
+                container.innerHTML = '';
+            }, 5000);
+        }
+
+        function restartQuiz() {
+            document.getElementById('resultsSection').classList.remove('active');
+            document.getElementById('hero').style.display = 'flex';
+            document.querySelector('.features-section').style.display = 'block';
+            document.getElementById('community').style.display = 'block';
+            document.querySelector('.about-section').style.display = 'block';
+            document.querySelector('footer').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function shareResult() {
+            const score = document.getElementById('scoreNumber').textContent;
+            const title = document.getElementById('resultTitle').textContent;
+            const text = `I got ${score} on "Does Your Crush Like You?" quiz! ${title}`;
+            
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Does Your Crush Like You?',
+                    text: text,
+                    url: window.location.href
+                });
+            } else {
+                navigator.clipboard.writeText(text + ' ' + window.location.href);
+                alert('Result copied to clipboard!');
+            }
+        }
+
+        // Navigation
+        function goHome() {
+            document.getElementById('quizSection').classList.remove('active');
+            document.getElementById('resultsSection').classList.remove('active');
+            document.getElementById('hero').style.display = 'flex';
+            document.querySelector('.features-section').style.display = 'block';
+            document.getElementById('community').style.display = 'block';
+            document.querySelector('.about-section').style.display = 'block';
+            document.querySelector('footer').style.display = 'block';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function scrollToCommunity() {
+            goHome();
+            setTimeout(() => {
+                document.getElementById('community').scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+
+        // Settings
+        function openSettings() {
+            document.getElementById('settingsModal').classList.add('active');
+        }
+
+        function closeSettings() {
+            document.getElementById('settingsModal').classList.remove('active');
+        }
+
+        function toggleSetting(type) {
+            const toggle = document.getElementById(type + 'Toggle');
+            const icon = document.getElementById(type + 'Icon');
+            toggle.classList.toggle('active');
+            icon.classList.toggle('muted');
+        }
+
+        // Donate
+        function openDonate() {
+            closeSettings();
+            document.getElementById('donateModal').classList.add('active');
+        }
+
+        function closeDonate() {
+            document.getElementById('donateModal').classList.remove('active');
+            selectedAmount = null;
+            document.querySelectorAll('.amount-btn').forEach(btn => btn.classList.remove('selected'));
+            document.getElementById('customAmount').value = '';
+            document.getElementById('donateBtn').disabled = true;
+            document.getElementById('donateContent').style.display = 'block';
+            document.getElementById('thankYouContent').style.display = 'none';
+        }
+
+        function selectAmount(amount) {
+            selectedAmount = amount;
+            document.querySelectorAll('.amount-btn').forEach(btn => btn.classList.remove('selected'));
+            event.target.classList.add('selected');
+            document.getElementById('customAmount').value = '';
+            document.getElementById('donateBtn').disabled = false;
+            document.getElementById('donateBtn').textContent = 'Donate $' + amount;
+        }
+
+        function selectCustomAmount(value) {
+            if (value) {
+                selectedAmount = parseInt(value);
+                document.querySelectorAll('.amount-btn').forEach(btn => btn.classList.remove('selected'));
+                document.getElementById('donateBtn').disabled = false;
+                document.getElementById('donateBtn').textContent = 'Donate $' + value;
+            } else {
+                document.getElementById('donateBtn').disabled = true;
+            }
+        }
+
+        function confirmDonate() {
+            document.getElementById('donateContent').style.display = 'none';
+            document.getElementById('thankYouContent').style.display = 'block';
+            document.getElementById('donateHeader').style.display = 'none';
+            
+            setTimeout(() => {
+                closeDonate();
+                document.getElementById('donateHeader').style.display = 'block';
+            }, 3000);
+        }
+
+        // Crush Form
+        function showCrushForm() {
+            document.getElementById('crushForm').classList.add('active');
+        }
+
+        function hideCrushForm() {
+            document.getElementById('crushForm').classList.remove('active');
+        }
+
+        let uploadedPhoto = null;
+
+        function handlePhotoUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    uploadedPhoto = e.target.result;
+                    const uploadDiv = document.getElementById('photoUpload');
+                    uploadDiv.innerHTML = `<img src="${uploadedPhoto}" alt="Crush photo">`;
+                    uploadDiv.classList.add('has-image');
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function submitCrush(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('crushName').value;
+            const story = document.getElementById('crushStory').value;
+            
+            const crushes = JSON.parse(localStorage.getItem('crushes') || '[]');
+            crushes.unshift({
+                id: Date.now(),
+                name,
+                story,
+                photo: uploadedPhoto,
+                likes: 0,
+                date: new Date().toLocaleDateString()
+            });
+            
+            localStorage.setItem('crushes', JSON.stringify(crushes));
+            
+            // Reset form
+            document.getElementById('crushName').value = '';
+            document.getElementById('crushStory').value = '';
+            uploadedPhoto = null;
+            document.getElementById('photoUpload').innerHTML = `
+                <div class="upload-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17,8 12,3 7,8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    <span>Add Photo</span>
+                </div>
+            `;
+            document.getElementById('photoUpload').classList.remove('has-image');
+            
+            hideCrushForm();
+            loadCrushes();
+        }
+
+        function loadCrushes() {
+            const grid = document.getElementById('crushesGrid');
+            let crushes = JSON.parse(localStorage.getItem('crushes') || '[]');
+            
+            // Add creator's crush (Jasmine) if not exists
+            const hasJasmine = crushes.some(c => c.isCreator);
+            if (!hasJasmine) {
+                crushes.unshift({
+                    id: 'jasmine',
+                    name: 'Jasmine',
+                    story: "I've liked Jasmine since the very first day of school. There was just something about her smile that made my heart skip a beat. Every time she walks into the room, everything else fades away. I get nervous when she's near, but in the best way possible. She's kind, smart, and has the most beautiful laugh. I hope one day I can tell her how I feel...",
+                    photo: null,
+                    likes: 999,
+                    date: new Date().toLocaleDateString(),
+                    isCreator: true
+                });
+                localStorage.setItem('crushes', JSON.stringify(crushes));
+            }
+            
+            grid.innerHTML = '';
+            
+            crushes.forEach((crush, index) => {
+                const card = document.createElement('div');
+                card.className = 'crush-card' + (crush.isCreator ? ' creator-card' : '');
+                
+                const photoHtml = crush.photo 
+                    ? `<img src="${crush.photo}" alt="${crush.name}">`
+                    : `<div class="avatar"><svg viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg></div>`;
+                
+                const creatorBadge = crush.isCreator 
+                    ? `<div class="creator-badge"><svg viewBox="0 0 24 24"><path d="M5 16L3 5l8-3 8 3-2 11-6 4-6-4z"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>Creator's Crush</div>`
+                    : '';
+                
+                const crownIcon = crush.isCreator 
+                    ? '<svg viewBox="0 0 24 24"><path d="M5 16L3 5l8-3 8 3-2 11-6 4-6-4z"/><path d="M12 8v8"/><path d="M8 12h8"/></svg>'
+                    : '';
+                
+                card.innerHTML = `
+                    <div class="crush-photo">
+                        ${photoHtml}
+                        ${creatorBadge}
+                    </div>
+                    <div class="crush-content">
+                        <h3 class="crush-name">${crush.name}${crownIcon}</h3>
+                        <p class="crush-story">${crush.story}</p>
+                        <div class="crush-footer">
+                            <span class="crush-date">${crush.date}</span>
+                            <button class="like-btn" onclick="likeCrush(${crush.id}, this)">
+                                <svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                                <span>${formatLikes(crush.likes)}</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                grid.appendChild(card);
+            });
+        }
+
+        function likeCrush(id, btn) {
+            if (btn.classList.contains('liked')) return;
+            
+            let crushes = JSON.parse(localStorage.getItem('crushes') || '[]');
+            const crush = crushes.find(c => c.id === id);
+            if (crush) {
+                crush.likes++;
+                localStorage.setItem('crushes', JSON.stringify(crushes));
+                btn.classList.add('liked');
+                btn.querySelector('span').textContent = formatLikes(crush.likes);
+            }
+        }
+
+        function formatLikes(likes) {
+            if (likes >= 1000) {
+                return (likes / 1000).toFixed(1) + 'k';
+            }
+            return likes.toString();
+        }
+
+        // Close modals on backdrop click
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    if (overlay.id === 'settingsModal') closeSettings();
+                    if (overlay.id === 'donateModal') closeDonate();
+                }
+            });
+        });
+    </script>
+ </body>
+</html>
